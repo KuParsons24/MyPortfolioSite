@@ -38,7 +38,10 @@ router.post('/contact', async (req, res) => {
 
 router.get('/admin/contact/api', async (req, res) => {
     try {
-        const messages = await Message.findAll();
+        let messages = await Message.findAll({
+            attributes: ['id', 'name', 'email', 'message'],
+            order: [['id', 'DESC']]
+        });
         res.json(messages);
     } catch (error) {
         console.log(error);
@@ -61,6 +64,19 @@ router.delete('/admin/contact/api', (req, res) => {
         });
         const json = JSON.stringify(obj);
         res.json(json);
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+router.put('/admin/contact/api', async (req, res) => {
+    try {
+        await Message.update({ name: req.body.name, email: req.body.email, message: req.body.message }, {
+            where: {
+                id: req.body.id
+            }
+        });
+        res.json(JSON.stringify({editSuccess: true}));
     } catch (error) {
         console.error(error);
     }
