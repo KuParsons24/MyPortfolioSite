@@ -23,7 +23,6 @@ router.get('/contact', (req, res) => {
 
 //allows recieving data from the contact form. Creates a database entry for the data.
 router.post('/contact', async (req, res) => {
-    console.log(req.body);
     try {
         await Message.create({
             name: req.body.name,
@@ -60,7 +59,7 @@ router.delete('/admin/contact/api', (req, res) => {
                     id: id
                 }
             });
-            console.log(message);
+            //console.log(message);
         });
         const json = JSON.stringify(obj);
         res.json(json);
@@ -81,5 +80,20 @@ router.put('/admin/contact/api', async (req, res) => {
         console.error(error);
     }
 })
+
+router.post('/admin/contact/api', async (req, res) => {
+    try {
+        await Message.create({
+            name: req.body.name,
+            email: req.body.email,
+            message: req.body.message,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+    res.json(JSON.stringify({
+        addSuccess: true
+    }));
+});
 
 module.exports = router;
