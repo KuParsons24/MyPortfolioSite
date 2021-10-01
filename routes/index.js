@@ -96,4 +96,8 @@ router.post('/admin/contact/api', async (req, res) => {
     }));
 });
 
+router.get('/crud', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3001;
+const path = require('path');
 //requiring all the data base functions and models into one object.
 const db = require('./db/index.js');
 
@@ -13,6 +14,7 @@ app.set('views', './views');
 
 //sets a static folder called static with everything from public
 app.use('/static', express.static('public'));
+app.use('/crud', express.static(path.join(__dirname, 'build')));
 
 //this is for form data. It specifies the type of message that is expected to be recieved.
 app.use(express.json())
